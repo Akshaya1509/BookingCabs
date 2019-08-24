@@ -37,9 +37,9 @@ public class Application {
 //		System.out.println(CustomerRating.getAvgCustomerRating(amar));
 		
 		// assign drivers
-		List<String> drivers = Trip.bookCab(amar);
-		for(String d : drivers) {
-			System.out.println(d);
+		List<Driver> drivers = Trip.bookCab(amar);
+		for(Driver d : drivers) {
+			System.out.println(d.getName());
 		}
 		
 	}

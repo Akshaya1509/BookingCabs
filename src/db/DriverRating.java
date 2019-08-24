@@ -12,20 +12,19 @@ public class DriverRating {
 	private Trip trip;
 	private Driver driver;
 	
-	private static Map<String, ArrayList<Integer>> driverMap = new HashMap<String, ArrayList<Integer>>();
-	private static Map<String, Double> driverAvgMap = new HashMap<String, Double>();
+	private static Map<Driver, ArrayList<Integer>> driverMap = new HashMap<Driver, ArrayList<Integer>>();
+	private static Map<Driver, Double> driverAvgMap = new HashMap<Driver, Double>();
 
 	public static void setAvgDriverRating(Driver d, Integer rating) {
-		String name = d.getName();
-		if (!driverMap.containsKey(name)) {
-			driverMap.put(name, new ArrayList<Integer>());
+		if (!driverMap.containsKey(d)) {
+			driverMap.put(d, new ArrayList<Integer>());
 		}	
-		driverMap.get(name).add(rating);
-		getAvgDriverRating(d.getName());
+		driverMap.get(d).add(rating);
+		getAvgDriverRating(d);
 	}
 	
 	// must be executed in separate thread
-	public static double getAvgDriverRating(String d) {
+	public static double getAvgDriverRating(Driver d) {
 		double avg;
 		if (driverMap.containsKey(d)) {
 			avg = MathUtils.getAvg(driverMap.get(d));
@@ -36,7 +35,7 @@ public class DriverRating {
 		return avg;
 	}
 	
-	public static Map<String, Double> getAllAvgRating() {
+	public static Map<Driver, Double> getAllAvgRating() {
 		return driverAvgMap;
 	}
 	

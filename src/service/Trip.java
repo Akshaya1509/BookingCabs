@@ -15,7 +15,7 @@ public class Trip {
 	private int driverRating;
 	private int customerRating;
 	
-	private static Map<String, ArrayList<String>> cusDriverRelation = new HashMap<String, ArrayList<String>>();
+	private static Map<Customer, ArrayList<Driver>> cusDriverRelation = new HashMap<Customer, ArrayList<Driver>>();
 	
 	public Trip(Driver driver, Customer customer, int driverRating, int customerRating) {
 		super();
@@ -33,17 +33,17 @@ public class Trip {
 	}
 	
 	private void setCustomerDriverRelation(Customer c, Driver d) {
-		if (!cusDriverRelation.containsKey(c.getName())) {
-			cusDriverRelation.put(c.getName(), new ArrayList<String>());
+		if (!cusDriverRelation.containsKey(c)) {
+			cusDriverRelation.put(c, new ArrayList<Driver>());
 		}	
-		cusDriverRelation.get(c.getName()).add(d.getName());
+		cusDriverRelation.get(c).add(d);
 	}
 	
-	public static List<String> bookCab(Customer c) {
+	public static List<Driver> bookCab(Customer c) {
 		double cusRating = CustomerRating.getAvgCustomerRating(c);
-		Map<String, Double> map = DriverRating.getAllAvgRating();
-		List<String> results = new ArrayList<String>();
-		for (Map.Entry<String, Double> entry : map.entrySet()) {
+		Map<Driver, Double> map = DriverRating.getAllAvgRating();
+		List<Driver> results = new ArrayList<Driver>();
+		for (Map.Entry<Driver, Double> entry : map.entrySet()) {
 			double value = entry.getValue();
 			if (value >= cusRating && value >= 1.0)
 				results.add(entry.getKey());
@@ -53,9 +53,9 @@ public class Trip {
 		return results;
 	}
 	
-	private static void getDriversForCustomer(Customer c, List<String> results) {
-		List<String> drivers = cusDriverRelation.get(c.getName());
-		for (String d : drivers) {
+	private static void getDriversForCustomer(Customer c, List<Driver> results) {
+		List<Driver> drivers = cusDriverRelation.get(c);
+		for (Driver d : drivers) {
 			if (DriverRating.getAvgDriverRating(d) >= 1.0 ) 
 				results.add(d);
 		}
