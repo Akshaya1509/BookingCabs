@@ -8,6 +8,8 @@ import java.util.Map;
 
 import db.CustomerRating;
 import db.DriverRating;
+import model.Customer;
+import model.Driver;
 
 public class Trip {
 	private Driver driver;
@@ -24,12 +26,8 @@ public class Trip {
 		this.driverRating = driverRating;
 		this.customerRating = customerRating;
 		setCustomerDriverRelation(customer, driver);
-		setCustomerRating(customer, customerRating);
-		DriverRating.setAvgDriverRating(driver, driverRating);
-	}
-	
-	private void setCustomerRating(Customer customer, int customerRating) {
 		CustomerRating.setAvgCustomerRating(customer, customerRating);
+		DriverRating.setAvgDriverRating(driver, driverRating);
 	}
 	
 	private void setCustomerDriverRelation(Customer c, Driver d) {
@@ -41,11 +39,13 @@ public class Trip {
 	
 	public static List<Driver> bookCab(Customer c) {
 		double cusRating = CustomerRating.getAvgCustomerRating(c);
-		Map<Driver, Double> map = DriverRating.getAllAvgRating();
 		List<Driver> results = new ArrayList<Driver>();
-		for (Map.Entry<Driver, Double> entry : map.entrySet()) {
+		if (cusRating == 0)
+			return results;
+		Map<Driver, Double> driverAvgRating = DriverRating.getAllAvgRating();
+		for (Map.Entry<Driver, Double> entry : driverAvgRating.entrySet()) {
 			double value = entry.getValue();
-			if (value >= cusRating && value >= 1.0)
+			if (value >= cusRating && value > 1.0)
 				results.add(entry.getKey());
 		}
 		if (results.size() == 0)
@@ -56,11 +56,10 @@ public class Trip {
 	private static void getDriversForCustomer(Customer c, List<Driver> results) {
 		List<Driver> drivers = cusDriverRelation.get(c);
 		for (Driver d : drivers) {
-			if (DriverRating.getAvgDriverRating(d) >= 1.0 ) 
+			if (DriverRating.getAvgDriverRating(d) > 1.0 ) 
 				results.add(d);
 		}
 	}
 
-	
 	
 }

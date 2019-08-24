@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import service.Driver;
-import service.Trip;
+import model.Driver;
 import utils.MathUtils;
 
 public class DriverRating {
-	private Trip trip;
-	private Driver driver;
-	
 	private static Map<Driver, ArrayList<Integer>> driverMap = new HashMap<Driver, ArrayList<Integer>>();
 	private static Map<Driver, Double> driverAvgMap = new HashMap<Driver, Double>();
 

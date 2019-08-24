@@ -3,11 +3,15 @@ package application;
 import java.util.List;
 
 import db.CustomerRating;
-import service.Customer;
-import service.Driver;
+import model.Customer;
+import model.Driver;
 import service.Trip;
 
 public class Application {
+	// Assumptions: 
+	// If Customer is not present:
+	// 			- Avg Rating : 0.0
+	//	        - No eligible drivers will be printed
 
 	public static void main(String[] args) {
 		// avg cus rating
@@ -19,9 +23,9 @@ public class Application {
 		Driver ram = new Driver("Ram");
 		Driver rajan = new Driver("Rajan");
 		
-		Trip trip1 = new Trip(raghu, amar, 4, 5);
-		Trip trip2 = new Trip(ram, amar, 5, 1);
-		Trip trip3 = new Trip(rajan, amar, 3, 2);
+		new Trip(raghu, amar, 4, 5);
+		new Trip(ram, amar, 5, 1);
+		new Trip(rajan, amar, 3, 2);
 		new Trip(raghu, akbar , 5,4);
 		new Trip(ram, amar, 5, 1);
 		new Trip(ram, akbar, 5, 5);
@@ -31,8 +35,8 @@ public class Application {
 		
 		System.out.println(CustomerRating.getAvgCustomerRating(amar));
 		
-//		Trip trip1 = new Trip(new Driver("Raghu"), amar, 2, 5);
-//		Trip trip2 = new Trip(new Driver("Ram"), amar, 0, 1);
+//		Trip trip1 = new Trip(new Driver("Raghu"), amar, 0, 5);
+//		Trip trip2 = new Trip(new Driver("Ram"), amar, 2, 1);
 //		Trip trip3 = new Trip(new Driver("Rajan"), amar, 0, 2);
 //		System.out.println(CustomerRating.getAvgCustomerRating(amar));
 		
@@ -41,7 +45,6 @@ public class Application {
 		for(Driver d : drivers) {
 			System.out.println(d.getName());
 		}
-		
 	}
 
 }

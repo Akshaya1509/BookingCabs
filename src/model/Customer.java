@@ -1,19 +1,15 @@
-package service;
+package model;
 
-public class Driver {
+public class Customer {
 	private String name;
-
-	public Driver(String name) {
+	
+	public Customer(String name) {
 		super();
 		this.name = name;
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Override
@@ -32,7 +28,7 @@ public class Driver {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Driver other = (Driver) obj;
+		Customer other = (Customer) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -40,6 +36,6 @@ public class Driver {
 			return false;
 		return true;
 	}
-	
+
 	
 }
